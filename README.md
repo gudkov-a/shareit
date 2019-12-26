@@ -8,4 +8,10 @@ In this project I use:
  * Django 2.2
  * Pillow
  * JavaScript + JQuery
- * SQlite
+ * SQLite
+
+What I did here:
+* simple anti brute force auth backend
+* user interface has a roulette which you can use to switch between bookmarks
+* there are few commands on management folder that can be used as cron jobs to clean up old entries
+* crucial parts of the code covered with tests
