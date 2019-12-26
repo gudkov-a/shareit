@@ -1,0 +1,56 @@
+{% block content %}
+
+<div class="entry_container">
+
+<input class="roller-start-id" type="text" value="{{roller_start}}">
+<input class="roller-end-id" type="text" value="{{roller_end}}">
+
+    {% for entry in entries %}
+        <div class="entry_elem">
+
+            <div class="entry_elem_btns">
+                <div class="edit_elem">
+                    <a href="/admin/api/entry/{{entry.id}}/change/">edit</a>
+                </div>
+                <div class="date_elem">
+                    <span> {{entry.date|date:"H:m (d.m.Y)"}} </span>
+                </div>
+                <div class="remove_elem">
+                    <a class="del_btn" href="{% url 'delete' entry.id %}">remove</a>
+                </div>
+            </div>
+
+            <div class="entry_desc">
+                <div class="link_elem">
+                    {% if entry.desc %}
+                        <p>{{entry.desc}}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="entry_elem_content">
+                <div class="img_elem">
+                    {% if entry.img_path %}
+                        <img src="/media/{{entry.preview_img_path}}" class="img" onclick="window.open('/media/{{entry.img_path}}')">
+
+                    {% elif entry.url %}
+                        <img class="icon_img" src="/media/{{entry.icon}}">
+                        <a href="{{entry.url}}"> Open link </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="bottom_bar">
+                <div class="ttl_elem">
+                    {% if entry.pinned %}
+                        <small>Pinned</small>
+                    {% else %}
+                        <small>remove {{entry.delete_date}}</small>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

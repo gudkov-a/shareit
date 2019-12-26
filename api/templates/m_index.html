@@ -1,0 +1,227 @@
+<style>
+
+html body {
+    background: gainsboro;
+}
+
+* {
+    text-align: center;
+    font-family: Bookman;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+.messages {
+    text-align: center;
+    font-size: 50px;
+}
+
+input {
+    font-size: 50px;
+    margin: 5px;
+}
+
+.green_message {
+    color: #60d060;
+}
+
+.new_desc {
+    height: 150px;
+    border-radius: 10px;
+    border:5px green solid;
+}
+
+.new_url {
+    height: 150px;
+    border-radius: 10px;
+    border:5px green solid;
+}
+
+.share_btn {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    height: 150;
+}
+
+.new_entry {
+    text-align: center;
+}
+
+.form_flex_cont {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
+.entry_elem {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    background: ivory;
+}
+
+.entry_elem:first-of-type {
+    border: 10px solid #4CAF50;
+}
+
+.edit_elem {
+    font-size: 40px;
+    width: 30%;
+}
+
+.date_elem {
+    display: block;
+    font-size: 20px;
+    width: 30%;
+}
+
+.link_elem {
+    text-align: center;
+    font-size: 50px;
+}
+
+.img_elem {
+}
+
+.img {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+}
+
+.remove_elem {
+    font-size: 40px;
+    text-align: right;
+    width: 30%;
+    color: red;
+}
+
+.del_btn {
+    color: red;
+}
+
+.entry_elem_btns {
+    background: darkseagreen;
+    display: flex;
+    flex-direction: row;
+}
+
+.entry_elem_content {
+    font-size: 60px;
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+}
+
+.separator {
+    border: 30px solid white;
+}
+
+.bottom_bar {
+    font-size: 20px;
+    display: flex;
+    justify-content: flex-end;
+    background: darkseagreen;
+    height: 50px;
+}
+
+.ttl_elem {
+    width: 50px;
+    height: 30px;
+}
+
+</style>
+
+<div class="messages">
+    {% for message in messages %}
+        <span class="green_message">{{ message }}</span>
+    {% endfor %}
+</div>
+
+<h1 class="header">Share it mobile</h1>
+
+<div class="new_entry">
+    <form action="{% url 'add' %}" method="POST">
+        {% csrf_token %}
+        <div class="form_flex_cont">
+            <input type="text" class="new_desc" name="new_desc" placeholder="Short description">
+            <input type="text" class="new_url" name="new_url" placeholder="http://...">
+            <label for="pinned">Pin it!</label>
+
+            <input type="checkbox" class="pinned" name="pinned">
+            <label for="ttl">Remove after</label>
+
+            <select class="ttl" name="ttl">
+                {% for num in days_to_live %}
+                {% if num == 7 %}
+                    <option value="{{num}}" selected>{{num}}</option>
+                {% else %}
+                    <option value="{{num}}">{{num}}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+            <input type="submit" class="share_btn" value="Share!">
+        </div>
+    </form>
+</div>
+
+<hr>
+
+<h1>Last entries:</h1>
+<div class="entry_container">
+    {% for entry in entries %}
+    <div class="entry_elem">
+
+        <div class="entry_elem_btns">
+            <div class="edit_elem">
+                <a href="/admin/api/entry/{{entry.id}}/change/">edit</a>
+            </div>
+            <div class="date_elem">
+                <span> {{entry.date|date:"H:m (d.m.Y)"}} </span>
+            </div>
+            <div class="remove_elem">
+                <a class="del_btn" href="{% url 'delete' entry.id %}">remove</a>
+            </div>
+        </div>
+
+        <div class="entry_desc">
+            <div class="link_elem">
+                <p>{{entry.desc}}</p>
+            </div>
+        </div>
+
+        <div class="entry_elem_content">
+            <div class="img_elem">
+                {% if entry.img_path %}
+                    <img src="/media/{{entry.preview_img_path}}" class="img" onclick="window.open('/media/{{entry.img_path}}')">
+
+                {% elif entry.url %}
+                    <a href="{{entry.url}}"> Open link </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="bottom_bar">
+            <div class="ttl_elem">
+                {% if entry.pinned %}
+                    <p>Pinned</p>
+                {% else %}
+                    <p>remove {{entry.delete_date}}</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    {% endfor %}
+</div>

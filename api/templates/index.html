@@ -1,0 +1,61 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'index.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{% static 'js/index.js' %} "></script>
+
+
+<div class="main_container">
+<h1>My bookmarks!</h1>
+
+<div class="logout">
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div class="messages">
+    <input class="messages_ttl" value="{{messages_ttl}}">
+    {% for message in messages %}
+        <span class="green_message">{{ message }}</span>
+    {% endfor %}
+</div>
+
+<hr>
+
+<div class="new_entry">
+    <h1>Use form below to save something</h1>
+    <form action="{% url 'add' %}" method="POST" enctype="multipart/form-data" class="add_form">
+        {% csrf_token %}
+
+        {{ form.new_desc }} {{ form.new_desc.errors }}
+        {{ form.new_url }} {{ form.new_url.errors }}
+        {{form.text }} {{form.text.errors }}
+        <div class="form_options">
+            <div class="pinned_container">
+                {{ form.pinned }} {{ form.pinned.errors }}
+                <span>pin it!</span>
+            </div>
+            <div class="delete_after">
+                <span>remove after</span>
+                {{ form.delete_on }} {{ form.delete_on.errors }}
+                <span>days</span>
+            </div>
+        </div>
+        {{ form.img_path }} {{ form.img_path.errors }}
+        <div class="submit_container">
+            <input type="submit" class="share_btn" value="Share!">
+        </div>
+    </form>
+</div>
+<hr>
+
+<h1>Your collection</h1>
+<div class="roller">
+    <div class="btn-back" onclick="roller_bk()"><p>< BACK</p></div>
+
+{% include "content.html" %}
+
+    <div class="btn-fwd" onclick="roller_fwd()"><p>FORTH ></p></div>
+</div>
+
+<hr>
+<i>All Rights Reserved</i>
+</div>
