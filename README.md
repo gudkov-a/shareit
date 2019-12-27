@@ -15,3 +15,9 @@ What I did here:
 * user interface has a roulette which you can use to switch between bookmarks
 * there are few commands on management folder that can be used as cron jobs to clean up old entries
 * crucial parts of the code covered with tests
+* there are different template for mobile users
+
+How to run:
+* clone the repo
+* cd into the project dir and run ./initial.sh
+* run development server: python3 manage.py runserver 0.0.0.0:8000
