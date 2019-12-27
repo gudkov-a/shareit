@@ -124,10 +124,10 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-media/images/icons/*.*
-media/images/preview/*.*
-media/images/*.*
-#!media
+#media/images/icons/*.*
+#media/images/preview/*.*
+#media/images/*.*
+#!media/
 #!media/images
 #!media/images/icons
 #!media/images/preview
