@@ -18,7 +18,8 @@ What I did here:
 * there is different template for mobile users
 
 How to run:
-* install all the packages: pip3 install -r requirements.txt
 * clone the repo
-* cd into the project dir and run ./initial.sh
+* "cd" into the project dir
+* install all the packages: pip3 install -r requirements.txt
+* run "./initial.sh" to apply migrations and create user
 * run development server: python3 manage.py runserver 0.0.0.0:8000
