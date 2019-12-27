@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from random import choices
+from string import ascii_letters, punctuation
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +22,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n+_h*^zgt8q)&yg&3*#4_6+--jay^l8*7=yzr@)e#g=uq=2ua9'
+letters_and_punc = list(ascii_letters + punctuation)
+random_symbols = choices(letters_and_punc, k=52)
+SECRET_KEY = ''.join(random_symbols)
+
+# SECRET_KEY = 'n+_h*^zgt8q)&yg&3*#4_6+--jay^l8*7=yzr@)e#g=uq=2ua9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
