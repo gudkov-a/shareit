@@ -154,13 +154,17 @@ class IconGetter:
         if self.__url is None:
             return None
 
-        raw_page = self.__get_content()
-        path_to_icon = self.parse_content(raw_page)
-        if path_to_icon:
-            icon_file = self.__fetch_icon_file(path_to_icon)
-            name = self.__get_name() + '.' + self.__get_extension(path_to_icon)
-            uploaded_file = self.__converter(self.__pil_converter(icon_file), name)
-            return uploaded_file
+        try:
+            raw_page = self.__get_content()
+            path_to_icon = self.parse_content(raw_page)
+            if path_to_icon:
+                icon_file = self.__fetch_icon_file(path_to_icon)
+                name = self.__get_name() + '.' + self.__get_extension(path_to_icon)
+                uploaded_file = self.__converter(self.__pil_converter(icon_file), name)
+                return uploaded_file
+        except Exception as e:
+            print(e)
+            return None
 
 
 def get_first_and_last_ids(list_of_items):

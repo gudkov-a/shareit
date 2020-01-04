@@ -77,12 +77,7 @@ def add_entry(request):
         if form.is_valid():
             new_entry_handler = NewEntryProcessor(form, request)
             user_object, description, url, pinned, delete_on, img, preview_img = new_entry_handler.extract()
-            try:
-                icon_img = IconGetter(url).get_icon()
-            except Exception as e:
-                icon_img = None
-                print(e)
-                messages.add_message(request, messages.INFO, 'Error occurred while retrieving icon')
+            icon_img = IconGetter(url).get_icon()
 
             if url or img:
                 Entry.objects.create(desc=description,
