@@ -2,7 +2,7 @@
 
 The intent of this project is to store some information like URLs, texts and pictures for myself or someone else, like a personal bookmarks.
 
-This is not the code I'm proud of. There is a lot of work needs to be done and right now you should consider this only as an example not a complete product.
+This is not the code I'm proud of because it's very simple. There is a lot of work needs to be done and right now you should consider this only as an example not a complete product.
 
 In this project I use:
  * Django 2.2
