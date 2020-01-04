@@ -14,7 +14,8 @@ class AntiBruteBackend:
         remote_addr = request.META.get('REMOTE_ADDR')
         num_of_attempts = AuthLog.get_attempts_by_ip_address(remote_addr)
         if num_of_attempts > settings.ATTEMPTS_TO_LOGIN - 1:
-            print('Too many login failures!')
+            if settings.DEBUG:
+                print('Too many login failures!')
             return None
 
         user_object = self.get_user_by_username(username)
