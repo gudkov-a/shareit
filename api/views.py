@@ -104,17 +104,8 @@ def delete_entry(request, entry_id):
     :param request: Django Request
     :param entry_id: int
     """
-    entry_query = Entry.objects.filter(id=entry_id)
+    for entry in Entry.objects.filter(id=entry_id):
+        entry.delete_with_files()
 
-    for entry in entry_query:
-        if entry.img_path:
-            img_file = entry.img_path.path
-            preview_img = entry.preview_img_path.path
-            icon = entry.icon
-            for img in [img_file, preview_img, icon]:
-                if os.path.exists(img):
-                    os.remove(img)
-        entry.delete()
-
-        messages.add_message(request, messages.INFO, 'Entry was deleted!')
+    messages.add_message(request, messages.INFO, 'Entry was deleted!')
     return redirect('index')

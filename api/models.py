@@ -24,6 +24,12 @@ class Entry(models.Model):
     preview_img_path = models.ImageField(upload_to='images/preview', blank=True, null=True)
     icon = models.ImageField(upload_to='images/icons/', blank=True, null=True)
 
+    def delete_with_files(self):
+        for f in [self.img_path, self.preview_img_path, self.icon]:
+            if bool(f):
+                f.delete()
+        self.delete()
+
     def __str__(self):
         return '{0}, {1}'.format(self.desc, self.url)
 
