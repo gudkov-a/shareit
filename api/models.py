@@ -27,7 +27,6 @@ class Entry(models.Model):
     def delete(self):
         for f in [self.img_path, self.preview_img_path, self.icon]:
             if bool(f):
-                print('deleting', f.path)
                 f.delete()
         super().delete()
 
