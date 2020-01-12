@@ -105,7 +105,7 @@ def delete_entry(request, entry_id):
     :param entry_id: int
     """
     for entry in Entry.objects.filter(id=entry_id):
-        entry.delete_with_files()
+        entry.delete()
 
     messages.add_message(request, messages.INFO, 'Entry was deleted!')
     return redirect('index')
