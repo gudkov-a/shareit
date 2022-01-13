@@ -8,7 +8,7 @@ httplib2==0.11.3
 idna==2.6
 keyring==17.1.1
 keyrings.alt==3.1.1
-Pillow==6.2.1
+Pillow==9.0.0
 pycrypto==2.6.1
 pycurl==7.43.0.2
 PyGObject==3.30.4
