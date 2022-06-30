@@ -19,7 +19,9 @@ class Entry(models.Model):
     text = models.TextField(blank=True, null=True)
     owner = models.ForeignKey(User, models.SET_NULL, blank=True, null=True)
     pinned = models.BooleanField(default=False)
-    delete_on = models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(days=7), blank=True, null=True)
+    delete_on = models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(days=7),
+                                     blank=True,
+                                     null=True)
     img_path = models.ImageField(upload_to='images', blank=True, null=True)
     preview_img_path = models.ImageField(upload_to='images/preview', blank=True, null=True)
     icon = models.ImageField(upload_to='images/icons/', blank=True, null=True)
@@ -94,7 +96,8 @@ class AuthLog(models.Model):
         return 'from:{0} at {1}'.format(self.remote_address, self.attempt_date)
 
     @staticmethod
-    def get_attempts_by_ip_address(ip_address):
+    def is_host_reached_auth_attempts_limit(ip_address: str) -> bool:
         start = datetime.datetime.now() - datetime.timedelta(minutes=settings.ATTEMPTS_INTERVAL or 5)
         end = datetime.datetime.now()
-        return AuthLog.objects.filter(remote_address=ip_address, attempt_date__range=(start, end)).count()
+        auth_log_counts = AuthLog.objects.filter(remote_address=ip_address, attempt_date__range=(start, end)).count()
+        return auth_log_counts >= settings.ATTEMPTS_TO_LOGIN - 1
