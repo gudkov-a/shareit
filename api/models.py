@@ -53,9 +53,9 @@ class Entry(models.Model):
     @staticmethod
     def get_last_four():
         query = list(Entry.objects.order_by('date'))
-        if len(query) > settings.ROLLER_LENGTH - 1:
+        if len(query) >= settings.ROLLER_LENGTH:
             return query[-settings.ROLLER_LENGTH:]
-        return None
+        return query
 
     @staticmethod
     def get_previous_entries(current_entry_id):
