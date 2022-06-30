@@ -6,9 +6,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
+
+from .utils import is_client_on_mobile
 from .models import Entry
 from .forms import EntryForm
-import os
 from .request_utils import NewEntryProcessor, get_first_and_last_ids, IconGetter
 
 
@@ -31,7 +32,7 @@ def index(request):
                    'roller_start': roller_first_item_id, 'roller_end': roller_last_item_id,
                    'messages_ttl': settings.MESSAGES_TIME_TO_LIVE}
 
-        if 'Android' in request.META['HTTP_USER_AGENT']:
+        if is_client_on_mobile(request):
             last_four.reverse()
             return render(request, 'm_index.html', context)
         return render(request, 'index.html', context)

@@ -18,7 +18,9 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
+
 from api.views import index, add_entry, delete_entry, log_out, get_prev, get_next
+
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
