@@ -29,7 +29,7 @@ SECRET_KEY = ''.join(random_symbols)
 # SECRET_KEY = 'n+_h*^zgt8q)&yg&3*#4_6+--jay^l8*7=yzr@)e#g=uq=2ua9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
