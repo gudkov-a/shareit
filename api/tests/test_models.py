@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
+
 from api.models import Entry
 
 
@@ -11,7 +12,6 @@ class TestEntryMethods(TestCase):
             Entry.objects.create(**{'url': 'https://google.com/', 'desc': 'Test {0}'.format(i)})
 
     def test_retrieving_entries(self):
-
         latest = Entry.get_last_four()
         ids = [i.pk for i in latest]
         self.assertEqual(ids, [7, 8, 9, 10])
@@ -24,7 +24,6 @@ class TestEntryMethods(TestCase):
         next_ids = [i.pk for i in next_entries]
         self.assertEqual(next_ids, [7, 8, 9, 10])
 
-        # moving around
         next_entries = Entry.get_next_entries(next_ids[-1])
         next_ids = [i.pk for i in next_entries]
         self.assertEqual(next_ids, [1, 2, 3, 4])
@@ -35,3 +34,5 @@ class TestEntryMethods(TestCase):
 
         # Remove all except first and try to retrieve last four
         Entry.objects.all().exclude(pk=1).delete()
+        entries = Entry.get_last_four()
+        self.assertEqual(len(entries), 1)

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import datetime
+
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from api.models import AuthLog
-import datetime
 from api.management.commands.clean_up_auth_log import Command
-from api.tests import create_post_request
+
+from api.models import AuthLog
 
 
 class TestAuthLog(TestCase):
@@ -28,13 +29,12 @@ class TestAuthLog(TestCase):
         self.assertEqual(AuthLog.objects.count(), 1)
 
     def test_brute_login(self):
-        request = create_post_request('add/', {}, self.user)
+        # Check that validation works fine
+        check = authenticate(username='test_user', password='123')
+        self.assertTrue(type(check), type(User))
 
-        check = authenticate(request, username='test_user', password='123')
-        self.assertTrue(check)
-
+        # After too many failures system will not authenticate user for next 5 minutes
         for i in range(5):
-            authenticate(request, username='test_user', password=i)
-
-        check = authenticate(request, username='test_user', password='123')
+            authenticate(username='test_user', password=i)
+        check = authenticate(username='test_user', password='123')
         self.assertIsNone(check)
